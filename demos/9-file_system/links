@@ -1,0 +1,73 @@
+SYMBOLIC/HARD LINKS
+
+	echo Hola > archivo
+
+	stat archivo
+		Mostrar cantidad de links
+
+	ln archivo hl_archivo
+	stat archivo
+		Mostrar nueva cantidad de links
+	stat hl_archivo
+		Mostrar que es el mismo nodo
+
+	ln -s archivo sl_archivo
+	stat sl_archivo
+		Mostrar que no cambia el count de links
+
+PERMISOS
+
+	chmod u-w archivo
+		Mostrar que tanto el hard link como el archivo comparten permisos
+
+	chmod u-r sl_archivo
+		No se cambian los permisos, es inútil ya que rigen los del inodo original
+
+SUPERBLOQUE
+
+	sudo debugfs /dev/sda1
+		O /dev/sda6 si se crearon en /home
+
+		stats
+			Mostrar info de superbloque, grupos, block size, etc
+
+	CONTENIDO ARCHIVO
+
+		stat archivo
+		dd if=/dev/sda1 bs=4096 count=1 skip=<block>
+
+		stat sl_archivo
+			Al ser el path al file destino menor a 60 chars se almacena la ruta en el inodo
+		imap sl_archivo
+			Sacar número de bloque de inodo
+
+		dd if=/dev/sda1 bs=4096 count=1 skip=<inode_block> | hexdump -C
+		bless out
+			Debería aparecer "archivo", si no se ve usar |strings
+
+	FREE INODES BITMAP
+
+		imap sl_archivo
+		stats
+			Buscar grupo donde reside el inodo y luego sacar el bloque donde está el bitmap de inodos
+		dd if=/dev/sda1 bs=4096 count=1 skip=<inode_bitmap_block> | hexdump -v
+			Un cero representa inodo libre
+
+SL A NOMBRE DE FILE LARGO
+
+	touch nombrelargoxxxxx
+	ln -s nombrelargoxxxxx sl_largo
+	sudo debugfs /dev/sda1
+		stat sl_largo
+			Sacar bloque del path
+		dd if=/dev/sda1 bs=4096 count=1 skip=<inode_bitmap_block> | hexdump -Cv
+			Ruta completa en el bloque y no el inodo
+
+	DIRECTORIO MODO RAW
+
+		stat .
+			Buscar el bloque del directorio
+		dd if=/dev/sda1 bs=4096 count=1 skip=<dir_block> > out
+		bless out
+			Mostrar nombre de files
+

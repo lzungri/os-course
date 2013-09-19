@@ -1,0 +1,38 @@
+ARCHIVO GRANDE
+	Si no está creado la imagen de ext2 con el file:
+		dd if=/dev/zero bs=4096 count=1000 of=ext2.img
+		sudo mkfs.ext2 -t ext2 ext2.img
+
+	mkdir ext2
+	sudo mount ext2.img ext2
+	cd ext2
+	sudo ls -R / >> large
+
+	sudo debugfs /tmp/fs/ext2.img
+	stat large
+	dd if=/tmp/fs/ext2.img bs=1024 count=1 skip=<primer_bloque_directo> 2>/dev/null|hexdump -Cv
+		Mostrar el contenido del file
+
+	dd if=/tmp/fs/ext2.img bs=1024 count=1 skip=<bloque_indirecto> 2>/dev/null|hexdump -Cv
+		Mostrar contenido del primer bloque indirecto, convertir hexa a decimal para ver el número de bloque
+
+	dd if=/tmp/fs/ext2.img bs=1024 count=1 skip=<bloque_indirecto_doble> 2>/dev/null|hexdump -Cv
+		Mostrar contenido del primer bloque indirecto doble
+
+SECURE/SAFE DELETE
+	sudo debugfs /tmp/fs/ext2.img
+		stat large
+		sudo dd if=/tmp/fs/ext2.img bs=1024 count=1 skip=<primer_bloque_datos>
+		cp large large2
+		rm large
+		sudo dd if=/tmp/fs/ext2.img bs=1024 count=1 skip=<primer_bloque_datos>
+			Sigue estando el contenido en el disco
+
+		stat large2
+		shred large2 -v --remove
+		sudo dd if=/tmp/fs/ext2.img bs=1024 count=1 skip=<primer_bloque_datos_large2>
+			El contenido fue escrito con basura
+
+DEVICE AS A FILE
+	sudo hexdump /dev/input/by-path/*kbd
+

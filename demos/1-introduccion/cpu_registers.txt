@@ -1,0 +1,14 @@
+1- Compilar cpu_registers en 32bits
+2- Mostrar cómo cambian los registros eip, eflags al ejecutar el programa.
+
+3- Analizar la instrucción CMP (le resta al operando derecho el izquierdo) y mostrar cómo se hace el jump.
+4- Mostrar el segundo CMP, cómo se puede hacer para saltear la asignación variable = 3? JG mirá el bit de signo resultado de hacer el CMP.
+	Anular el bit de signo (bit 7)
+	p $eflags = $eflags & 0xffffff7f
+	p $eflags = $eflags & ~(1<<7)
+
+5- Describir el bit TRAP del eflags (bit 8).
+6- Setearlo y mostrar que a pesar de ejecutar el programa ante cada instrucción salta un trap.
+	p $eflags = $eflags | 1 << 8
+7- Anularlo y mostrar que al dar continue finaliza el programa.
+	p $eflags = $eflags & ~(1<<8)

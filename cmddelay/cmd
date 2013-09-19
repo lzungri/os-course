@@ -1,0 +1,17 @@
+[1]
+printf "\t\t\t\t------O------\n"
+ps -fea|grep $
+[2]
+clear 
+printf "\n\t\t\t******< CMDELAY v2004 >******\n"
+ps -fea|grep $
+[3]
+printf "\e[12;25H******< CMDELAY v2004 >******\e[0;6H"
+[4]
+echo Formateando disco
+echo format /q
+[5]
+echo "Comando $"
+ps -fea|grep tty1
+[3]
+$

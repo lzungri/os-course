@@ -1,0 +1,3 @@
+all:
+	gcc guia_sincro-ej6.c -oguia_sincro-ej6 -lpthread -g
+	gcc th_race.c -oth_race -g -lpthread

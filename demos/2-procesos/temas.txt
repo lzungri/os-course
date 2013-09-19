@@ -1,0 +1,42 @@
+1- Mostrar el programa return_value.c
+
+
+2- Mostrar funcion.c
+
+	32 bits:
+		1- Debuggear paso a paso, mostrar como se aloca espacio para los parámetros en el stack y mostrar como se guardan los valores:
+			graph display `x/32bx $esp`
+			graph display `info registers eax eip eflags esp ebp`
+		2- Una vez dentro de la función() mostrar cómo se coloca en eax el valor de a.
+		3- La cosa no termina en main(), seguir hasta llegar a la invocación a exit().
+
+	64 bits:
+		1- Cambia en algo el binario si se lo compila en 64 bits?
+		2- Cómo se hace el pasaje de parámetros?: Por registro, porqué? Porque hay más registros, es más eficiente (menos escrituras/lecturas en memoria).
+
+
+3- Mostrar funcion_stack_params.c
+	1- Pasaje de parámetros:
+		3 formas posibles: Por stack, por registro o una combinación de ambas cuando la cantidad de registros no alcanzan para albergar la totalidad de los parámetros.
+	2- Cómo se pasa un string como parámetro en 64 bits? EL ptr se guarda en el registro.
+
+
+4- Mostrar simple_vars.c
+
+	32 bits:
+		1- El stack se alinea a 16 bits por cuestiones de optimización y acceso a los valores en posiciones fácilmente ubicables (ya que sino habría que conocer los tipos de las variables anteriores). Si un valor requiere sólo un byte entonces el restante se completa con ceros.
+		2- Mostrar cómo se aloca espacio para el stack: En lugar de hacerlo con Push resta el stack así no es necesario decrementar el pointer con cada push, también esto permite la randomización.
+		3- Mostrar que la dirección de memoria alocada por malloc() está en el heap:
+			cat /proc/<pid>/maps o sino desde system monitor.
+
+
+
+
+Displays:
+	`x/32bx $sp`	// 32 bytes del stack
+	`info registers eax eip eflags esp ebp`	// Registros x86
+	`info registers rax rip eflags rsp rbp`	// Registros x86-64
+
+Info:
+	http://msdn.microsoft.com/en-us/library/aa290049%28VS.71%29.aspx: On both of the 64-bit platforms, the top of each stackframe is 16-byte aligned. Although this uses more space than is needed, it guarantees that the compiler can place all data on the stack in a way that all elements are aligned. 
+
