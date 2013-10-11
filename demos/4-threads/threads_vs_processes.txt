@@ -1,0 +1,15 @@
+Alumnos,
+  En la clase de threads (hilos), mientras analizábamos las desventajas del uso de los mismos surgió el tema de porqué Google decidió implementar su browser (Chrome) utilizando procesos en cada pestaña en lugar de threads.
+
+Entre las razones principales estaban:
+
+Estabilidad: Dado que los threads comparten el espacio de direcciones del proceso, un error en un thread (violación de segmento por ejemplo) podría provocar la caída del proceso/browser, con la consiguiente pérdida de toda la información.
+Al implementar cada pestaña como un proceso, si un error ocurre al procesar la página, esto simplemente afectaría a ese proceso/pestaña, sin perjudicar a todo el browser.
+ Seguridad: Un thread es capaz de acceder a la memoria de otro (ya que comparten el espacio), lo cual se traduce a que una pestaña podría leer/escribir sobre otra. Esto no parece muy bueno a la hora de hacer transferencias bancarias mientras se bajan torrents de pirate bay.
+Dado que cada proceso es una entidad independiente (salvo que los comuniquen de forma explícita, por ejemplo con memoria compartida), un proceso en teoría no podría afectar a otro.
+Mayor riesgo ante memory leaks: Cuando un thread aloca memoria dinámica lo hace en el contexto del proceso. Cuando un thread finaliza no libera toda la memoria que él alocó o los recursos que abrió. Por lo tanto, si existen memory leaks a nivel de thread entonces estos van a terminar afectando a todos los demás threads y persistirán hasta que se muera el proceso.
+Con los procesos eso no ocurre ya que al finalizar libera su memoria.
+
+Desde Google hicieron una muy buena movida de marketing (más que nada orientada a nerds) y crearon un comic donde explican las funcionalidades de Chrome, pueden accederlo desde acá (en inglés).
+
+

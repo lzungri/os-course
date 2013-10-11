@@ -1,0 +1,10 @@
+Buenas,
+Para profundizar un poco más sobre las funciones setcontext/getcontext les paso un programa muy básico que haciendo uso de estas crea y planifica 3 ULTs de manera cooperativa (non preemptive).
+
+Lo interesante que tiene el ejemplo es que se puede apreciar fácilmente como uno mismo puede implementar su propio algoritmo de planificación de ULTs en base a sus necesidades. Todo esto gracias a que la gestión de threads es realizada en el espacio de usuario a través de nuestro programa.
+
+Noten como el ult2, en lugar de cederle la ejecución al siguiente ULT, le pide al usuario que ingrese el id del próximo ULT a despachar. Nada más inútil que esto para un planificador "real", pero al menos resulta bastante didáctico.
+
+Lo compilan y ejecutan de la siguiente manera:
+    gcc ult.c -o ult
+    ./ult

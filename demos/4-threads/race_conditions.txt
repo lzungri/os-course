@@ -1,0 +1,27 @@
+Alumnos,
+Les adjunto el programa en C que utilizamos a modo introductorio en la clase de sincronización.
+
+Recuerden que este programa consistía de 2 threads que incrementaban una variable global sin tomar los recaudos de sincronización necesarios, lo cual daba lugar a race conditions (condiciones de carrera).
+
+El programa lo compilan (en Linux) de la siguiente manera:
+	gcc th_race.c -o th_race -lpthread
+
+Si lo ejecutan una cantidad de veces verán que el valor final de la variable global, que se esperaba sea siempre 20000, resulta ser diferente entre sucesivas ejecuciones del programa.
+Esto dejaba al descubierto los problemas de sincronización sobre la variable compartida counter.
+
+Si quieren comprobar como la sentencia C "counter++" se traduce a múltiples instrucciones, prueben mirar el assembly de la función th_func() mediante el siguiente comando:
+	objdump -d th_race | grep -A15 th_func
+
+Estaría muy bueno si alguien envía este mismo programa correctamente sincronizado. Para ello pueden usar cualquiera de las soluciones que analizamos en clase (incluso utilizar como modelo el ejercicio de semáforos que envió Federico).
+
+
+
+Nuevo desafío:
+Compilen el programa de la siguiente manera:
+	gcc th_race.c -o th_race -lpthread -O3
+
+Ejecuten repetidas veces el programa, ¿falla ahora?
+¿Qué cambio se produjo en el programa que lo hace menos expuesto a este tipo de fallas?
+
+
+

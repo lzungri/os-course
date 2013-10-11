@@ -1,0 +1,15 @@
+Buenas,
+Continuando con el tema que presentamos la clase pasada acerca del stack, heap y demás componentes de la imagen de un proceso tengo un desafío que quizás les resulte interesante.
+
+Se tiene un programa que permite visualizar el contenido de los próximos parciales de SO a tomar. Para acceder al sistema se requiere lamentablemente de una contraseña, la cual pueden descubrir fácilmente mirando el código fuente.
+Ya que ustedes conocen a la perfección cómo es la estructura interna de un proceso en Linux, los desafío a que en lugar de usar la contraseña que figura en el código ingresen otra diferente pero que igualmente les otorgue acceso al sistema.
+
+Para compilar el programa utilicen el siguiente comando:
+ 	gcc parciales.c -o parciales -fno-stack-protector
+Para ejecutarlo:
+ 	./parciales
+
+
+¿Qué contraseña utilizaron y por qué? (De más está decir que no vale modificar el programa).
+
+

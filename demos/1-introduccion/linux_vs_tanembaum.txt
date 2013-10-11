@@ -1,0 +1,6 @@
+Buenas,
+
+Para aquellos que quieran profundizar un poco más en los conceptos de Microkernel y kernel monolíticos les dejo un debate que se dio en 1992 entre Linus Torvalds (creador de Linux) y Andrew Tanenbaum (creador de Minix) sobre esta temática:
+http://oreilly.com/catalog/opensources/book/appa.html
+
+Lamentablemente está en inglés, si alguien lo consigue en español que por favor suba el link por este medio.

@@ -1,0 +1,32 @@
+Buenas,
+En la clase de hoy mientras analizábamos las bibliotecas de ULTs les mencioné una posible manera de implementarlas mediante el uso de las funciones setcontext/getcontext/swapcontext/makecontext.
+Estas funciones, definidas en la libc, permiten guardar y restaurar el contexto del procesador en user space. Esto nos da la posibilidad de administrar diferentes flujos de ejecución en forma transparente para el sistema operativo (con todas las ventajas y desventajas que eso conlleva).
+
+Acá les adjunto el programa que haciendo uso de esas funciones implementa en forma mágica un loop.
+
+Lo compilan de la siguiente manera:
+	gcc loop.c -o loop
+
+
+Por último les dejo un nuevo desafío:
+   En intel de 32 bits no está permitido mediante una instrucción leer el valor del instruction pointer (en 64 bits sí es posible). Esto significa que no se puede hacer por ejemplo 'mov eip, eax' tan alegremente.
+Sabiendo que getcontext(&ctx) guarda el contexto del procesador en la estructura ctx, siendo parte más que importante de ese contexto el IP:
+	¿Cómo hace la función getcontext() para obtener entonces el valor del IP?
+
+Copio parte del assembly de la función:
+   mov	0x4(%esp),%eax
+   movl   $0x0,0x40(%eax)
+   mov	%ecx,0x3c(%eax)
+   mov	%edx,0x38(%eax)
+   mov	%edi,0x24(%eax)
+   mov	%esi,0x28(%eax)
+   mov	%ebp,0x2c(%eax)
+   mov	(%esp),%ecx
+   mov	%ecx,0x4c(%eax)
+   lea	0x4(%esp),%ecx
+   mov	%ecx,0x30(%eax)
+   mov	%ebx,0x34(%eax)
+   ...
+
+En eax está el puntero a la estructura.
+
