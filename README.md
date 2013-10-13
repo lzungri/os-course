@@ -1,4 +1,4 @@
-os-course-demos
-===============
+os-course
+=========
 
-Little programs used as demos for the Operating systems course at National Technological University (Buenos Aires, Argentina)
+Operating Systems lecture notes and little programs used as demos, National Technological University (Buenos Aires, Argentina)
